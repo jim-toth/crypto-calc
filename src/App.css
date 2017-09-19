@@ -1,0 +1,19 @@
+.App {
+  margin:0 auto;
+}
+
+.App, html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+  font-family: 'Michroma', 'Roboto', sans-serif;
+}
+
+.App-header {
+  background-color: #303030;
+  height: 120px;
+  padding: 20px;
+  color: white;
+  text-align:center;
+}
+
+.App-intro {
+  font-size: large;
+}

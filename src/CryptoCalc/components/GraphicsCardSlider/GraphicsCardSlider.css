@@ -1,0 +1,54 @@
+.GraphicsCardSlider {
+  color:black;
+  margin:25px auto;
+  text-align:center;
+}
+
+/* Rig */
+.GraphicsCardSlider-rig {
+  border:5px solid black;
+  display:inline-block;
+  margin:10px;
+  height:100px;
+  width:150px;
+}
+.GraphicsCardSlider-rig-selected {
+  border-color: rgba(0,100,0,1);
+}
+.GraphicsCardSlider-rig-hover {
+  border-color:rgba(0,100,0,1);
+}
+
+/* Card */
+.GraphicsCardSlider-card {
+  background-color:gray;
+  display:inline-block;
+  margin:2px;
+  width:20px;
+  height:96px;
+}
+.GraphicsCardSlider-card-selected {
+  background-color:rgba(0,100,0,1);
+}
+.GraphicsCardSlider-card-hover {
+  background-color:rgba(0,100,0,1);
+}
+.GraphicsCardSlider-card-tooltip {
+  background-color:white;
+  font-weight:bold;
+  position:relative;
+  top:-36px;
+  left:-5px;
+  width:20px;
+  padding:5px;
+  margin:0 auto;
+  text-align:center;
+  opacity:0;
+  overflow:visible;
+}
+.GraphicsCardSlider-card-tooltip.show {
+  opacity:0.9;
+}
+.GraphicsCardSlider-card-tooltip.show.full {
+  border-color:rgba(0,100,0,1);
+}

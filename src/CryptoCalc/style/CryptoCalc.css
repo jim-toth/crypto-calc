@@ -1,0 +1,38 @@
+.CryptoCalc {
+  color:black;
+  margin:0 auto;
+}
+
+/* Input Controls */
+.CryptoCalc-controls {
+  margin:0 auto;
+  padding:15px;
+  text-align:center;
+}
+.CryptoCalc-control {
+  margin:10px;
+}
+.CryptoCalc-controls-wrapper {
+  text-align:center;
+  padding-left:350px;
+  padding-right:350px;
+}
+
+/* Totals */
+.CryptoCalc-totals {
+  margin:0 auto;
+  padding:15px;
+  text-align:center;
+}
+.CryptoCalc-total {
+  text-align:center;
+  display:inline-block;
+  padding:10px;
+  width:40%;
+}
+.CryptoCalc-hashrate-value {
+  margin-bottom:5px;
+}
+.CryptoCalc-hashrate-label {
+  margin-top:0;
+}
