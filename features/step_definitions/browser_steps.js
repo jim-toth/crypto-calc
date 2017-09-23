@@ -23,7 +23,7 @@ defineSupportCode(function({Given, When, Then}) {
     });
   });
   Then('I should see {int} graphics cards pre-selected', function (preselectedCards) {
-    this.driver.findElements(By.className('GraphicsCardSlider-card-selected')).then(selectedCards => {
+    this.driver.findElements(By.css('div.GraphicsCardSlider-card.selected')).then(selectedCards => {
       assert.equal(selectedCards.length, preselectedCards);
     });
   });
@@ -35,12 +35,12 @@ defineSupportCode(function({Given, When, Then}) {
     });
   });
   Then('I should see the slider fill up to the {int} card slot', function (cardSlot) {
-    this.driver.findElements(By.className('GraphicsCardSlider-card-selected')).then(selectedCards => {
+    this.driver.findElements(By.css('div.GraphicsCardSlider-card.selected')).then(selectedCards => {
       assert.equal(selectedCards.length, cardSlot);
     });
   });
   Then('I should see a tooltip with {int} graphics cards selected', function (cardSlot) {
-    this.driver.findElements(By.css('div.GraphicsCardSlider-card-tooltip.show')).then(visibleTooltips => {
+    this.driver.findElements(By.css('div.GraphicsCardSlider-tooltip.show')).then(visibleTooltips => {
       assert.equal(visibleTooltips.length, 1);
       visibleTooltips[0].isDisplayed().then(displayed => {
         assert.equal(displayed, true);
