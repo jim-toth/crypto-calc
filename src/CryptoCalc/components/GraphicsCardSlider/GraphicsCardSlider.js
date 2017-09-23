@@ -1,13 +1,36 @@
 import React from 'react';
 import './GraphicsCardSlider.css';
 
-export class GraphicsCardSlider extends React.Component {
+export default class GraphicsCardSlider extends React.Component {
   constructor(props) {
     super(props);
 
-    this.cards_per_rig = 6;
-    this.display_rigs = [1,2,3,4];
-    this.display_cards = [1,2,3,4,5,6];
+    this.num_rigs = parseInt(this.props.rigs);
+    if (isNaN(this.num_rigs)) {
+      this.num_rigs = 4;
+    } else if (this.num_rigs < 1) {
+      this.num_rigs = 1;
+    }
+    this.display_rigs = [];
+    for (let i=1; i <= this.num_rigs; i++) {
+      this.display_rigs.push(i);
+    }
+
+    this.cards_per_rig = parseInt(this.props.cards_per_rig);
+    if (isNaN(this.cards_per_rig)) {
+      this.cards_per_rig = 6;
+    } else if (this.cards_per_rig < 1) {
+      this.cards_per_rig = 1;
+    }
+    this.display_cards = [];
+    for (let i=1; i <= this.cards_per_rig; i++) {
+      this.display_cards.push(i);
+    }
+
+    this.handleMouseEnterCard = this.handleMouseEnterCard.bind(this);
+    this.handleClickCard = this.handleClickCard.bind(this);
+    this.handleMouseEnterSlider = this.handleMouseEnterSlider.bind(this);
+    this.handleMouseLeaveSlider = this.handleMouseLeaveSlider.bind(this);
 
     this.state = {
       hoverGraphicsCards: 0,
@@ -15,19 +38,27 @@ export class GraphicsCardSlider extends React.Component {
     };
   }
 
-  handleMouseEnterCard = (i, j) => {
-    this.setState({hoverGraphicsCards: i*this.cards_per_rig+j+1});
+  handleMouseEnterCard(i, j, callback) {
+    this.setState({hoverGraphicsCards: i*this.cards_per_rig+j+1}, () => {
+      if (callback && {}.toString.call(callback) === '[object Function]') {
+        callback();
+      }
+    });
   }
 
-  handleClickCard = (i, j) => {
-    this.props.onGraphicsCardChange(i*this.cards_per_rig+j+1);
+  handleClickCard(i, j) {
+    this.props.onGraphicsCardsChange(i*this.cards_per_rig+j+1);
   }
 
-  handleMouseEnterSlider = () => {
-    this.setState({mouseInside: true});
+  handleMouseEnterSlider(callback) {
+    this.setState({mouseInside: true}, () => {
+      if (callback && {}.toString.call(callback) === '[object Function]') {
+        callback();
+      }
+    });
   }
 
-  handleMouseLeaveSlider = () => {
+  handleMouseLeaveSlider() {
     this.setState({
       hoverGraphicsCards: 0,
       mouseInside: false
@@ -36,37 +67,40 @@ export class GraphicsCardSlider extends React.Component {
 
   render() {
     const mouseInside = this.state.mouseInside;
-    const graphicsCards = this.props.graphicsCards;
-    const hoverGraphicsCards = this.state.hoverGraphicsCards;
+    var graphicsCards;
+    if (mouseInside && this.state.hoverGraphicsCards === 0) {
+      graphicsCards = this.props.graphicsCards;
+    } else if (mouseInside) {
+      graphicsCards = this.state.hoverGraphicsCards;
+    } else {
+      graphicsCards = this.props.graphicsCards;
+    }
     const totalRigs = Math.floor(graphicsCards / this.cards_per_rig);
-    const totalHoverRigs = Math.floor(hoverGraphicsCards / this.cards_per_rig);
+    const cardsPerRig = this.cards_per_rig;
 
     return (
       <div className="GraphicsCardSlider"
-        onMouseEnter={this.handleMouseEnterSlider}
+        onMouseEnter={(e,callback) => {this.handleMouseEnterSlider(callback)}}
         onMouseLeave={this.handleMouseLeaveSlider}>
         {this.display_rigs.map((_, i) =>
           <div key={i}
             className={
               "GraphicsCardSlider-rig"
-              + (i < totalHoverRigs ? " GraphicsCardSlider-rig-hover":"")
-              + (!mouseInside && i < totalRigs ? " GraphicsCardSlider-rig-selected":"")
+              + (i < totalRigs ? " selected" : "")
             }>
             {this.display_cards.map((_, j) =>
               <div key={j}
                 className={
                   "GraphicsCardSlider-card"
-                  + (i*this.cards_per_rig+j < hoverGraphicsCards ? " GraphicsCardSlider-card-hover":"")
-                  + (!mouseInside && i*this.cards_per_rig+j < graphicsCards ? " GraphicsCardSlider-card-selected":"")
+                  + (i*cardsPerRig+j < graphicsCards ? " selected" : "")
                 }
-                onMouseEnter={(e) => this.handleMouseEnterCard(i,j)}
+                onMouseEnter={(e,callback) => {this.handleMouseEnterCard(i,j,callback)}}
                 onClick={(e) => this.handleClickCard(i,j)}>
                 <div className={
-                  "GraphicsCardSlider-card-tooltip"
-                  + (i*this.cards_per_rig+j === hoverGraphicsCards-1 ? " show":"")
-                  + ((j+1)%this.cards_per_rig === 0 ? " full":"")
+                  "GraphicsCardSlider-tooltip"
+                  + (mouseInside && i*cardsPerRig+j === this.state.hoverGraphicsCards-1 ? " show":"")
                   }>
-                  {i*this.cards_per_rig+j+1}
+                  {i*cardsPerRig+j+1}
                 </div>
               </div>
             )}

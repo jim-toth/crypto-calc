@@ -2,42 +2,40 @@
   color:black;
   margin:25px auto;
   text-align:center;
+  width:720px;
 }
 
 /* Rig */
 .GraphicsCardSlider-rig {
-  border:5px solid black;
+  border:5px solid rgb(77,77,77);
   display:inline-block;
   margin:10px;
   height:100px;
   width:150px;
 }
-.GraphicsCardSlider-rig-selected {
-  border-color: rgba(0,100,0,1);
+.GraphicsCardSlider-rig.selected {
+  border-color: rgb(76, 175, 80);
 }
 .GraphicsCardSlider-rig-hover {
-  border-color:rgba(0,100,0,1);
+  border-color: rgb(76, 175, 80);
 }
 
 /* Card */
 .GraphicsCardSlider-card {
-  background-color:gray;
+  background-color:rgb(77,77,77);
   display:inline-block;
   margin:2px;
   width:20px;
   height:96px;
 }
-.GraphicsCardSlider-card-selected {
-  background-color:rgba(0,100,0,1);
+.GraphicsCardSlider-card.selected {
+  background-color: rgb(76, 175, 80);
 }
-.GraphicsCardSlider-card-hover {
-  background-color:rgba(0,100,0,1);
-}
-.GraphicsCardSlider-card-tooltip {
+.GraphicsCardSlider-tooltip {
   background-color:white;
   font-weight:bold;
   position:relative;
-  top:-36px;
+  top:-40px;
   left:-5px;
   width:20px;
   padding:5px;
@@ -46,9 +44,9 @@
   opacity:0;
   overflow:visible;
 }
-.GraphicsCardSlider-card-tooltip.show {
+.GraphicsCardSlider-tooltip.show {
   opacity:0.9;
 }
-.GraphicsCardSlider-card-tooltip.show.full {
-  border-color:rgba(0,100,0,1);
+.GraphicsCardSlider-tooltip.show.full {
+  border-color: rgb(76, 175, 80);
 }

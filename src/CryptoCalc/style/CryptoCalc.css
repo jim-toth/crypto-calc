@@ -5,34 +5,33 @@
 
 /* Input Controls */
 .CryptoCalc-controls {
+  width:1120px;
   margin:0 auto;
-  padding:15px;
-  text-align:center;
 }
-.CryptoCalc-control {
+.CryptoCalc-paper {
+  background-color: rgb(48,48,48);
+  color: rgb(255,255,255);
   margin:10px;
-}
-.CryptoCalc-controls-wrapper {
-  text-align:center;
-  padding-left:350px;
-  padding-right:350px;
+  width:500px;
+  padding:20px;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 60px, rgba(0, 0, 0, 0.22) 0px 15px 20px;
+  border-radius: 2px;
 }
 
 /* Totals */
-.CryptoCalc-totals {
-  margin:0 auto;
-  padding:15px;
+.CryptoCalc-hashrate {
+  font-family: 'Michroma', 'Roboto', sans-serif;
+  font-size:18px;
   text-align:center;
-}
-.CryptoCalc-total {
-  text-align:center;
-  display:inline-block;
-  padding:10px;
-  width:40%;
 }
 .CryptoCalc-hashrate-value {
-  margin-bottom:5px;
+  font-size:64px;
 }
-.CryptoCalc-hashrate-label {
-  margin-top:0;
+.CryptoCalc-table-number, .CryptoCalc-table-price {
+  font-family: 'Roboto', sans-serif;  
+}
+.CryptoCalc-table-price {
+  text-align: right;
 }

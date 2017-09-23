@@ -12,8 +12,9 @@
   padding: 20px;
   color: white;
   text-align:center;
+  font-size:larger;
 }
 
 .App-intro {
-  font-size: large;
+  font-family: 'Roboto', sans-serif;
 }

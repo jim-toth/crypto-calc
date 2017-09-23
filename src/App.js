@@ -7,21 +7,25 @@ import 'purecss/build/grids.css';
 import 'purecss/build/pure.css';
 import './App.css';
 
-import { CryptoCalc } from './CryptoCalc/CryptoCalc';
+import CryptoCalc from './CryptoCalc/CryptoCalc';
 
 class App extends Component {
   render() {
     darkBaseTheme.fontFamily = 'Michroma, Roboto, sans-serif';
+    darkBaseTheme.table = {
+      fontFamily: 'Roboto, sans-serif'
+    };
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div className="App">
           <div className="App-header">
             <h2>CryptoCalc</h2>
             <p className="App-intro">
-              A CryptoCurrency Mining Calculator
+              A cryptocurrency mining calculator
             </p>
           </div>
-          <CryptoCalc />
+          <CryptoCalc endpoint="api.ethermine.org_networkStats.json" />
         </div>
       </MuiThemeProvider>
     );
