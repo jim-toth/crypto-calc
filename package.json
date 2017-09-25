@@ -2,6 +2,14 @@
   "name": "crypto-calc",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "coverage": "react-scripts test --env=jsdom --coverage",
+    "e2e": "./node_modules/.bin/cucumber-js",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "material-ui": "^0.19.2",
@@ -9,13 +17,6 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.13"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "e2e": "./node_modules/.bin/cucumber-js",
-    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",

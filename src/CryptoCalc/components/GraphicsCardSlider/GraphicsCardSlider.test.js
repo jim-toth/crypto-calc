@@ -5,7 +5,7 @@ import GraphicsCardSlider from './GraphicsCardSlider';
 const NUM_RIGS = 4;
 const CARDS_PER_RIG = 6;
 const TEST_VALUES = [-1,0,1,2,6,8,12,15,18,24,25];
-const HOVER_TEST_VALUES = [1,2,6,8,12,15,18,24];
+const VALID_TEST_VALUES = [1,2,6,8,12,15,18,24];
 const CUSTOM_INPUT = [-1,0,1,3,15,"","foo",{},{foo:1},null,NaN];
 const MAX_CARDS = NUM_RIGS * CARDS_PER_RIG;
 
@@ -75,16 +75,16 @@ describe('GraphicsCardSlider', () => {
   });
 
   it('highlights selected cards and full rigs on mouse hover', () => {
-    expect.assertions(HOVER_TEST_VALUES.length*(MAX_CARDS+NUM_RIGS));
-    for (let i=0; i < HOVER_TEST_VALUES.length; i++) {
-      const N = HOVER_TEST_VALUES[i];
+    expect.assertions(VALID_TEST_VALUES.length*(MAX_CARDS+NUM_RIGS));
+    for (let i=0; i < VALID_TEST_VALUES.length; i++) {
+      const N = VALID_TEST_VALUES[i];
       const slider = mount(
         <GraphicsCardSlider graphicsCards={0} />
       );
       // Trigger mouseEnter on Nth card
       const nthCard = slider.find('div.GraphicsCardSlider-card').at(N-1);
-      slider.find('div.GraphicsCardSlider').prop('onMouseEnter')({},() => {
-        nthCard.prop('onMouseEnter')({},() => {
+      slider.find('div.GraphicsCardSlider').prop('onMouseEnter')({}).then(() => {
+        nthCard.prop('onMouseEnter')({}).then(() => {
           const expectedCards = (N > MAX_CARDS) ? MAX_CARDS : N;
           const expectedRigs = (Math.floor(N/6) > NUM_RIGS) ? NUM_RIGS : Math.floor(N/6);
           // first N cards are highlighted
@@ -100,22 +100,55 @@ describe('GraphicsCardSlider', () => {
     }
   });
 
-  it('displays proper tooltip on mouse hover', () => {
-    expect.assertions(HOVER_TEST_VALUES.length);
-    for (let i=0; i < HOVER_TEST_VALUES.length; i++) {
-      let N = HOVER_TEST_VALUES[i];
-      const slider = mount(
-        <GraphicsCardSlider graphicsCards={0} />
-      );
+  it('displays number of selected cards in a tooltip on mouse hover', () => {
+    expect.assertions(VALID_TEST_VALUES.length);
+    for (let i=0; i < VALID_TEST_VALUES.length; i++) {
+      let N = VALID_TEST_VALUES[i];
+      const slider = mount(<GraphicsCardSlider graphicsCards={0} />);
       // Trigger mouseEnter on Nth card
       const nthCard = slider.find('div.GraphicsCardSlider-card').at(N-1);
-      slider.find('div.GraphicsCardSlider').prop('onMouseEnter')({},() => {
-        nthCard.prop('onMouseEnter')({},() => {
-          const expectedCards = (N > MAX_CARDS) ? MAX_CARDS : N;
+      const expectedCards = (N > MAX_CARDS) ? MAX_CARDS : N;
+      slider.find('div.GraphicsCardSlider').prop('onMouseEnter')({}).then(() => {
+        nthCard.prop('onMouseEnter')({}).then(() => {
           const tooltip = slider.find('div.GraphicsCardSlider-tooltip.show');
-          expect(tooltip.length).toEqual(1);
+          expect(tooltip.first().text()).toEqual(N.toString());
         });
       });
+    }
+  });
+
+  it('displays original card selection on mouse leave after hover', () => {
+    expect.assertions(VALID_TEST_VALUES.length * MAX_CARDS);
+    for (let i=0; i < VALID_TEST_VALUES.length; i++) {
+      let N = VALID_TEST_VALUES[i];
+      const slider = mount(<GraphicsCardSlider graphicsCards={N} />);
+      // Trigger mouseEnter then mouseLeave on Nth card
+      const nthCard = slider.find('div.GraphicsCardSlider-card').at(1);
+      slider.find('div.GraphicsCardSlider').prop('onMouseEnter')({}).then(() => {
+        nthCard.prop('onMouseEnter')({}).then(() => {
+          slider.find('div.GraphicsCardSlider').prop('onMouseLeave')({}).then(() => {
+            // original card selection returns
+            slider.find('div.GraphicsCardSlider-card').forEach((node, idx) => {
+              expect(node.hasClass('selected')).toEqual(idx+1 <= N);
+            });
+          });
+        });
+      });
+    }
+  });
+
+  it('triggers callback with new card selection on mouse click', () => {
+    expect.assertions(VALID_TEST_VALUES.length);
+    for (let i=0; i < VALID_TEST_VALUES.length; i++) {
+      let N = VALID_TEST_VALUES[i];
+      let onGraphicsCardsChange = (cards) => { expect(cards).toEqual(N) };
+      const slider = mount(
+        <GraphicsCardSlider
+          onGraphicsCardsChange={onGraphicsCardsChange}
+        />
+      );
+      // Trigger click on Nth card
+      slider.find('div.GraphicsCardSlider-card').at(N-1).prop('onClick')();
     }
   });
 });
